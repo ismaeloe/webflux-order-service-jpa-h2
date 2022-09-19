@@ -27,6 +27,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      #    mvn clean install
       run: mvn -B package --file pom.xml
 
     - name: Dockerize & Push Docker Image
@@ -37,7 +38,8 @@ jobs:
         tags: latest
         registry: docker.io
         ## Dockerfile Path
-        dockerfile: webflux-order-jpa-h2/Dockerfile
+        #dockerfile: webflux-order-jpa-h2/Dockerfile
+        dockerfile: Dockerfile
         ## Keep these secrets on GitHub for the privacy of our information
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
