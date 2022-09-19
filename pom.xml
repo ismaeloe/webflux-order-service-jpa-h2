@@ -13,7 +13,7 @@
 
 	<groupId>mx.com.ismaeloe</groupId>
 	<artifactId>webflux_order_service_jpa</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-Validation</version>
 	<name>webflux_order_service_jpa</name>
 	<description>Reactive WebFlux Order Service with JPA H2</description>
 
@@ -43,6 +43,11 @@
 			<optional>true</optional>
 		</dependency>
 	
+		<dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-validation</artifactId>
+	    </dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

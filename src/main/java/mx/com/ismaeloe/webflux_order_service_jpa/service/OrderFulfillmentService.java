@@ -19,7 +19,7 @@ public class OrderFulfillmentService {
 
 	@Autowired
 	private ProductClient productClient;
-	
+
 	@Autowired
 	private CustomerClient customerClient;
 	
@@ -31,7 +31,7 @@ public class OrderFulfillmentService {
 		//EstRequestContext
 		//Get ProductDto
 		//Get PurchaseOrder
-		/* WithOut METHOD REFERENCE
+		/*OK WithOut METHOD REFERENCE
 		 poRequestDtoMono.map( poRequestDtoMono -> new EstRequestContext(poRequestDtoMono) )				
 						.flatMap( estRequestContext -> this.productRequestResponse(estRequestContext))	
 						.doOnNext(estRequestContext -> EntityDtoUtil.setTransactionRequestDto(estRequestContext))	
@@ -44,14 +44,13 @@ public class OrderFulfillmentService {
 			*/			
 
 		/*
-		 * With METHOD REFERENCE
+		 *OK With METHOD REFERENCE / WithOut 
 		 * 
 		 * Because this.poRepository::save )  is  BLOCKING and AFFECTING PERFORMANCE
 		 *  we add .subscribeOn( Schedulers.boundedElastic())
 		 */
-		
 		return poRequestDtoMono.map( EstRequestContext::new) //.flatMap(this::productRequestResponse).
-				 		.flatMap( this::productRequestResponse )
+				 		.flatMap( this::productRequestResponse )//TODO .switchIfEmpty(null)
 				 		.doOnNext(EntityDtoUtil::setTransactionRequestDto)
 				 		.flatMap( this::customerRequestResponse )
 						.map( EntityDtoUtil::getPurchaseOrder )
@@ -65,12 +64,14 @@ public class OrderFulfillmentService {
 		/*
 		 * Option 1:
 		 * return Mono.just( erc);
-		 * return Mono.jst( new EstRequestContext(); )
+		 * return Mono.just( new EstRequestContext(); )
 		 * 
-		 * Option 2:
+		 * Option 2: Lamda productDto -> erc.setProductDto(productDto)
 		 * return this.productClient.getProductById( erc.getPurchaseOrderRequestDto().getIdProduct() )
 		 * 						.doOnNext( productDto -> erc.setProductDto(productDto))
 		 * 						.thenReturn(erc);
+		 * 
+		 * Option 3: Method Reference erc::setProductDto
 		 */
 		 return this.productClient.getProductById( erc.getPurchaseOrderRequestDto().getIdProduct()) //1. Get Mono<ProductDto>
 				 				.doOnNext( erc::setProductDto)	//2. Set ProductDto
