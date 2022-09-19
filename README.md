@@ -89,3 +89,5 @@ public class ProductClient {
 		//*/
 	}
 }
+
+##Add Dockerfile

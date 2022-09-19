@@ -13,8 +13,9 @@
 
 	<groupId>mx.com.ismaeloe</groupId>
 	<artifactId>webflux_order_service_jpa</artifactId>
-	<version>0.0.2-Validation</version>
+	<version>0.0.3-Dockerfile</version>
 	<name>webflux_order_service_jpa</name>
+	
 	<description>Reactive WebFlux Order Service with JPA H2</description>
 
 	<properties>
@@ -61,6 +62,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
