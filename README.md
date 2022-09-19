@@ -91,3 +91,6 @@ public class ProductClient {
 }
 
 ##Add Dockerfile
+#docker push ismaeloe/webflux-order-jpa-h2:tagname
+#docker pull ismaeloe/webflux-order-jpa-h2:latest
+#docker run ismaeloe/webflux-order-jpa-h2:latest
