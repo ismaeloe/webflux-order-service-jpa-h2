@@ -12,7 +12,7 @@ ENV ARTIFACT_NAME spring-boot.jar
 #ENV SPRING_BOOT_USER spring-boot
 #ENV SPRING_BOOT_GROUP spring-boot
 
-VOLUME /tmp
+VOLUME /tmpdocker
 
 # RUN addgroup -S $SPRING_BOOT_USER && adduser -S -g $SPRING_BOOT_GROUP $SPRING_BOOT_USER && \
 #  chmod 555 $APP_HOME/entrypoint.sh && sh -c 'touch $APP_HOME/$ARTIFACT_NAME'
@@ -29,4 +29,10 @@ WORKDIR $APP_HOME
 #COPY target/webflux_order_service_jpa.jar app.jar
 COPY target/webflux_order_service_jpa.jar $APP_HOME/$ARTIFACT_NAME
 
-ENTRYPOINT ["java", "-jar", "/spring-boot.jar"]
+#configure a container that will run as an executable
+ENTRYPOINT ["java", "-jar", "spring-boot.jar"]
+
+#BUILD docker build -t webflux_order:v1 .
+
+#RUN => docker run -it --rm -p 8093:8093 webflux_order:v1
+#RUN => docker exec -it test ps aux
